@@ -1,0 +1,163 @@
+/* ═══════════════════════════════════════════
+   EN-TÊTE ET INTRO
+═══════════════════════════════════════════ */
+.page-header { margin-bottom: 40px; }
+
+.page-eyebrow {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--crimson);
+  font-weight: 600; margin-bottom: 16px;
+}
+.page-eyebrow::before {
+  content: ''; display: block; width: 32px; height: 2px;
+  background: var(--crimson); border-radius: 2px;
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.8vw, 2.9rem);
+  line-height: 1.12; color: var(--text);
+  margin-bottom: 18px; letter-spacing: -0.02em;
+}
+.page-title em { color: var(--crimson); font-style: italic; }
+
+.section-divider {
+  width: 48px; height: 3px;
+  background: linear-gradient(to right, var(--crimson), var(--rose-deep));
+  border-radius: 3px; margin: 28px 0;
+}
+
+.intro-block {
+  background: var(--surface-2); padding: 32px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--crimson);
+  box-shadow: var(--shadow-sm); margin-bottom: 40px;
+  animation: fadeSlideUp 0.4s ease both;
+  border: 1px solid var(--border);
+}
+.intro-block p { color: var(--text-muted); margin-bottom: 16px; line-height: 1.7; }
+.intro-block p:last-child { margin-bottom: 0; }
+
+.main-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--crimson); font-weight: 600;
+  text-decoration: none; padding: 10px 16px;
+  background: var(--rose); border-radius: var(--radius-sm);
+  margin-bottom: 16px; transition: background var(--transition);
+}
+.main-link:hover { background: var(--rose-mid); }
+.main-link svg { width: 18px; height: 18px; }
+
+/* ═══════════════════════════════════════════
+   ACCORDÉON DES THÈMES
+═══════════════════════════════════════════ */
+.themes-accordion-container {
+  display: flex; flex-direction: column; gap: 16px;
+  animation: fadeSlideUp 0.5s ease both; animation-delay: 0.1s;
+}
+
+.theme-accordion {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: box-shadow var(--transition);
+}
+.theme-accordion:hover { box-shadow: var(--shadow-sm); border-color: var(--rose-mid); }
+.theme-accordion[open] { border-color: var(--rose-deep); box-shadow: var(--shadow); }
+
+/* Bouton du titre (Summary) */
+.theme-summary {
+  display: flex; align-items: center; gap: 16px;
+  padding: 24px; cursor: pointer; list-style: none;
+  font-family: 'Playfair Display', serif; font-size: 1.3rem;
+  color: var(--crimson-dark); font-weight: 600;
+  user-select: none; transition: background var(--transition);
+}
+.theme-summary::-webkit-details-marker { display: none; }
+.theme-summary:hover { background: var(--surface); }
+
+.theme-number {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; background: var(--crimson);
+  color: #fff; font-size: 1rem; border-radius: 50%;
+  flex-shrink: 0; font-family: 'Source Serif 4', serif;
+}
+
+.theme-title { flex: 1; }
+
+.chevron {
+  width: 24px; height: 24px; stroke: var(--text-light);
+  transition: transform 0.3s ease, stroke var(--transition);
+}
+.theme-accordion[open] .chevron { transform: rotate(180deg); stroke: var(--crimson); }
+
+/* Contenu de l'accordéon */
+.theme-content {
+  padding: 0 24px 32px;
+  border-top: 1px solid var(--border);
+  margin-top: -1px; /* Pour masquer la bordure si fermé */
+}
+
+/* Bouton d'accès au thème */
+.theme-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 24px 0; padding: 10px 20px;
+  background: var(--crimson); color: #fff;
+  text-decoration: none; border-radius: var(--radius-sm);
+  font-weight: 600; font-size: 0.9rem;
+  transition: background var(--transition), transform var(--transition);
+}
+.theme-cta:hover { background: var(--crimson-dark); transform: translateY(-2px); }
+.theme-cta svg { width: 16px; height: 16px; }
+
+/* ═══════════════════════════════════════════
+   CARTES DES SOUS-THÈMES
+═══════════════════════════════════════════ */
+.sub-themes-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.sub-theme-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 20px; border-radius: var(--radius-sm);
+}
+
+.sub-theme-card h4 {
+  font-size: 1.05rem; color: var(--text);
+  margin-bottom: 16px; padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.topic-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+.topic-list li a {
+  display: flex; align-items: flex-start; gap: 8px;
+  text-decoration: none; color: var(--text-muted);
+  font-size: 0.88rem; line-height: 1.4;
+  transition: color var(--transition);
+}
+.topic-list li a::before {
+  content: '→'; color: var(--rose-deep);
+  font-weight: bold; font-family: monospace;
+}
+.topic-list li a:hover { color: var(--crimson); }
+.topic-list li a:hover::before { color: var(--crimson); }
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS & RESPONSIVE
+═══════════════════════════════════════════ */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .sub-themes-grid { grid-template-columns: 1fr; }
+  .theme-summary { font-size: 1.15rem; padding: 18px 20px; }
+  .theme-content { padding: 0 20px 24px; }
+  .intro-block { padding: 20px; }
+}

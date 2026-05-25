@@ -1,0 +1,132 @@
+/* ═══════════════════════════════════════════
+   IMPORTS DES COMPOSANTS
+═══════════════════════════════════════════ */
+@import url('sidebar.css');
+@import url('footer.css');
+
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS (Variables)
+═══════════════════════════════════════════ */
+:root {
+  --crimson:       #A01C2C;
+  --crimson-dark:  #781522;
+  --crimson-mid:   #c02535;
+  --crimson-glow:  rgba(160,28,44,0.15);
+  --rose:          #F9E4E7;
+  --rose-mid:      #f0c4cb;
+  --rose-deep:     #e49aa5;
+  --surface:       #FDFAF9;
+  --surface-2:     #ffffff;
+  --border:        #F4E3E5; /* Plus clair pour affiner l'aspect des bordures */
+  --text:          #1e1214;
+  --text-muted:    #7a5a60;
+  --text-light:    #b89298;
+  
+  --sidebar-w:     272px;
+  --sidebar-collapsed-w: 80px;
+  --header-h:      60px;
+  
+  --radius:        12px;
+  --radius-sm:     8px;
+  --shadow-sm:     0 1px 6px rgba(160,28,44,0.08);
+  --shadow:        0 4px 20px rgba(160,28,44,0.12);
+  --shadow-lg:     0 8px 40px rgba(160,28,44,0.16);
+  --transition:    0.22s ease;
+}
+
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+html { 
+  scroll-behavior: smooth; 
+  -webkit-font-smoothing: antialiased; 
+}
+
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--surface);
+  color: var(--text);
+  line-height: 1.65;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══════════════════════════════════════════
+   GESTION DES LANGUES (Magie CSS)
+═══════════════════════════════════════════ */
+/* Typographie Géorgienne */
+body.is-georgian,
+body.is-georgian [data-lang="fr"],
+body.is-georgian .nav-item span,
+body.is-georgian .lang-label {
+  font-family: 'Noto Sans Georgian', sans-serif;
+}
+
+/* Affichage strict des blocs de langue */
+body:not(.is-georgian) [data-lang="geo"] { display: none !important; }
+body.is-georgian [data-lang="fr"] { display: none !important; }
+
+/* ═══════════════════════════════════════════
+   LAYOUT GLOBAL
+═══════════════════════════════════════════ */
+.page-wrapper {
+  margin-left: var(--sidebar-w);
+  min-height: 100vh;
+  display: flex; 
+  flex-direction: column;
+  transition: margin-left var(--transition);
+}
+
+.page-wrapper.sidebar-collapsed {
+  margin-left: var(--sidebar-collapsed-w);
+}
+
+main { 
+  flex: 1; 
+}
+
+/* Container pour tes futures pages (Élargi à 1200px) */
+.page-content {
+  padding: 52px 5% 72px; /* Marges latérales en pourcentage */
+  max-width: 1200px;     /* Plus large */
+  width: 100%;
+  margin: 0 auto;        /* Centré */
+}
+
+/* ═══════════════════════════════════════════
+   BOUTON MENU MOBILE (Caché par défaut)
+═══════════════════════════════════════════ */
+#mobile-menu-toggle {
+  display: none;
+  position: fixed;
+  top: 15px; left: 15px;
+  z-index: 1100;
+  background: var(--surface-2);
+  color: var(--crimson);
+  border: 1px solid var(--border);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+#mobile-menu-toggle:hover {
+  background: var(--rose);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE GLOBAL
+═══════════════════════════════════════════ */
+@media (max-width: 960px) {
+  .page-wrapper, .page-wrapper.sidebar-collapsed { margin-left: 0; }
+  .page-content { padding: 80px 24px 56px; } 
+  #mobile-menu-toggle { display: block; }    
+}

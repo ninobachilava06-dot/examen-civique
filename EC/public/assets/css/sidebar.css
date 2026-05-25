@@ -1,0 +1,222 @@
+/* ═══════════════════════════════════════════
+   SIDEBAR LAYOUT
+═══════════════════════════════════════════ */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--surface-2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: width var(--transition), transform var(--transition);
+  box-shadow: 4px 0 24px rgba(160,28,44,0.06);
+}
+
+.sidebar.collapsed {
+  width: var(--sidebar-collapsed-w);
+}
+
+/* ═══════════════════════════════════════════
+   EN-TÊTE SIDEBAR
+═══════════════════════════════════════════ */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-toggle-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  transition: background var(--transition), color var(--transition);
+}
+
+.sidebar-toggle-btn:hover {
+  background: var(--rose);
+  color: var(--crimson);
+}
+
+.sidebar-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ═══════════════════════════════════════════
+   MODULE DE LANGUE (SWITCH IOS)
+═══════════════════════════════════════════ */
+.sidebar-lang {
+  padding: 18px 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar.collapsed .sidebar-lang {
+  display: none;
+}
+
+.ios-switch-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.lang-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.ios-switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 26px;
+}
+
+.ios-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.ios-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--border);
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.ios-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+}
+
+input:checked + .ios-slider {
+  background-color: var(--crimson);
+}
+
+input:checked + .ios-slider:before {
+  transform: translateX(20px);
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+.sidebar-nav {
+  flex: 1;
+  padding: 18px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-nav ul { 
+  list-style: none; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 2px; 
+}
+
+.nav-item {
+  display: flex; 
+  align-items: center; 
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.nav-item:hover { 
+  background: var(--rose); 
+  color: var(--crimson); 
+}
+
+.nav-item.active { 
+  background: var(--rose); 
+  color: var(--crimson); 
+  font-weight: 600; 
+}
+
+.sidebar.collapsed .nav-text {
+  display: none;
+}
+
+.nav-icon {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  border-radius: 7px;
+  transition: background var(--transition);
+}
+
+.nav-item:hover .nav-icon,
+.nav-item.active .nav-icon { 
+  background: var(--rose-mid); 
+}
+
+.nav-icon svg {
+  width: 16px; height: 16px;
+  stroke: var(--text-light);
+  transition: stroke var(--transition);
+  flex-shrink: 0;
+}
+
+.nav-item:hover .nav-icon svg,
+.nav-item.active .nav-icon svg { 
+  stroke: var(--crimson); 
+}
+
+/* Animation de la flèche de repli */
+.chevron-icon {
+  transition: transform var(--transition);
+}
+
+/* Quand la sidebar est repliée, la flèche pointe vers la droite */
+.sidebar.collapsed .chevron-icon {
+  transform: rotate(180deg);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE (MOBILE MENU)
+═══════════════════════════════════════════ */
+@media (max-width: 960px) {
+  .sidebar {
+    transform: translateX(-100%); /* Cachée à gauche par défaut sur mobile */
+    width: 280px;                 /* Largeur fixe sur mobile */
+    z-index: 1200;                /* Pour passer au-dessus du reste */
+  }
+  
+  .sidebar.mobile-open {
+    transform: translateX(0);     /* Glisse sur l'écran quand on clique */
+    box-shadow: 10px 0 30px rgba(0,0,0,0.15);
+  }
+  
+  /* On cache le bouton de repli bureau sur mobile (la flèche latérale) */
+  .sidebar-toggle-btn { display: none; }
+}

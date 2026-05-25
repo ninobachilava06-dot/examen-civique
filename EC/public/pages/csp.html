@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte de Séjour Pluriannuelle — Quiz & Révision</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Source+Serif+4:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/quiz-engine.css">
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <div class="page-wrapper">
+        <main class="page-content">
+
+            <!-- EN-TÊTE ─────────────────────────────────── -->
+            <header class="page-header">
+                <h1 class="page-title">
+                    <span data-lang="fr">Carte de Séjour <em>Pluriannuelle</em></span>
+                    <span data-lang="geo"><em>მრავალწლიანი ბინადრობის ბარათი</em></span>
+                </h1>
+            </header>
+
+            <!-- ONGLETS ──────────────────────────────────── -->
+            <nav class="page-tabs">
+                <button class="tab-btn active" onclick="switchTab('quiz', this)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <span data-lang="fr">Quiz</span>
+                    <span data-lang="geo">ქვიზი</span>
+                </button>
+                <button class="tab-btn" onclick="switchTab('revision', this)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    <span data-lang="fr">Cartes de révision</span>
+                    <span data-lang="geo">სარევიზიო ბარათები</span>
+                </button>
+            </nav>
+
+            <!-- CONFIGURATION ────────────────────────────── -->
+            <section id="quiz-config" class="content-block">
+
+                <!-- ── QUIZ TAB ── -->
+                <div id="quiz-tab-content">
+                    <div class="mode-tiles">
+                        <div class="mode-tile active" onclick="selectMode('quiz','theme',this)">
+                            <span class="tile-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            </span>
+                            <span class="tile-title" data-lang="fr">Par thème</span>
+                            <span class="tile-title" data-lang="geo">თემის მიხედვით</span>
+                            <span class="tile-desc" data-lang="fr">Toutes les questions d'un thème</span>
+                            <span class="tile-desc" data-lang="geo">ერთი თემის ყველა კითხვა</span>
+                        </div>
+                        <div class="mode-tile" onclick="selectMode('quiz','exam',this)">
+                            <span class="tile-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                            </span>
+                            <span class="tile-title" data-lang="fr">Mode Examen</span>
+                            <span class="tile-title" data-lang="geo">გამოცდის რეჟიმი</span>
+                            <span class="tile-desc" data-lang="fr">40 questions · répartition officielle</span>
+                            <span class="tile-desc" data-lang="geo">40 კითხვა · ოფიციალური განაწილება</span>
+                        </div>
+                        <div class="mode-tile" onclick="selectMode('quiz','all',this)">
+                            <span class="tile-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            </span>
+                            <span class="tile-title" data-lang="fr">Tout réviser</span>
+                            <span class="tile-title" data-lang="geo">სრული განმეორება</span>
+                            <span class="tile-desc" data-lang="fr">Toutes les questions</span>
+                            <span class="tile-desc" data-lang="geo">ყველა კითხვა</span>
+                        </div>
+                    </div>
+
+                    <div class="config-row" id="theme-row">
+                        <label>
+                            <span data-lang="fr">Thème</span>
+                            <span data-lang="geo">თემა</span>
+                        </label>
+                        <select id="theme-select" class="config-select">
+                            <option value="PVR" data-fr="Principes et Valeurs (PVR)"       data-geo="პრინციპები და ღირებულებები (PVR)">Principes et Valeurs (PVR)</option>
+                            <option value="SIP" data-fr="Système Institutionnel (SIP)"     data-geo="ინსტიტუციური სისტემა (SIP)">Système Institutionnel (SIP)</option>
+                            <option value="DD"  data-fr="Droits et Devoirs (DD)"           data-geo="უფლებები და მოვალეობები (DD)">Droits et Devoirs (DD)</option>
+                            <option value="HGC" data-fr="Histoire, Géo &amp; Culture (HGC)" data-geo="ისტორია, გეო და კულტურა (HGC)">Histoire, Géo &amp; Culture (HGC)</option>
+                            <option value="VSF" data-fr="Vivre en France (VSF)"             data-geo="ცხოვრება საფრანგეთში (VSF)">Vivre en France (VSF)</option>
+                            <option value="OP"  data-fr="Mises en situation"                data-geo="სიტუაციური კითხვები">Mises en situation</option>
+                        </select>
+                    </div>
+
+                    <div class="config-row">
+                        <label>
+                            <span data-lang="fr">Correction</span>
+                            <span data-lang="geo">გასწორება</span>
+                        </label>
+                        <select id="correction-mode" class="config-select">
+                            <option value="instant" data-fr="Immédiate" data-geo="მყისიერი">Immédiate</option>
+                            <option value="end"     data-fr="À la fin"  data-geo="ბოლოს">À la fin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ── FLASHCARD TAB ── -->
+                <div id="fc-tab-content" style="display:none">
+                    <div class="mode-tiles">
+                        <div class="mode-tile active" onclick="selectMode('fc','theme',this)">
+                            <span class="tile-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                            </span>
+                            <span class="tile-title" data-lang="fr">Par thème</span>
+                            <span class="tile-title" data-lang="geo">თემის მიხედვით</span>
+                            <span class="tile-desc" data-lang="fr">Toutes les fiches d'un thème</span>
+                            <span class="tile-desc" data-lang="geo">ერთი თემის ყველა ბარათი</span>
+                        </div>
+                        <div class="mode-tile" onclick="selectMode('fc','random40',this)">
+                            <span class="tile-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                            </span>
+                            <span class="tile-title" data-lang="fr">40 fiches</span>
+                            <span class="tile-title" data-lang="geo">40 ბარათი</span>
+                            <span class="tile-desc" data-lang="fr">Sélection aléatoire</span>
+                            <span class="tile-desc" data-lang="geo">შემთხვევითი არჩევანი</span>
+                        </div>
+                        <div class="mode-tile" onclick="selectMode('fc','all',this)">
+                            <span class="tile-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                            </span>
+                            <span class="tile-title" data-lang="fr">Toutes les fiches</span>
+                            <span class="tile-title" data-lang="geo">ყველა ბარათი</span>
+                            <span class="tile-desc" data-lang="fr">Révision complète</span>
+                            <span class="tile-desc" data-lang="geo">სრული განმეორება</span>
+                        </div>
+                    </div>
+
+                    <div class="config-row" id="fc-theme-row">
+                        <label>
+                            <span data-lang="fr">Thème</span>
+                            <span data-lang="geo">თემა</span>
+                        </label>
+                        <select id="fc-theme-select" class="config-select">
+                            <option value="PVR" data-fr="Principes et Valeurs (PVR)"       data-geo="პრინციპები და ღირებულებები (PVR)">Principes et Valeurs (PVR)</option>
+                            <option value="SIP" data-fr="Système Institutionnel (SIP)"     data-geo="ინსტიტუციური სისტემა (SIP)">Système Institutionnel (SIP)</option>
+                            <option value="DD"  data-fr="Droits et Devoirs (DD)"           data-geo="უფლებები და მოვალეობები (DD)">Droits et Devoirs (DD)</option>
+                            <option value="HGC" data-fr="Histoire, Géo &amp; Culture (HGC)" data-geo="ისტორია, გეო და კულტურა (HGC)">Histoire, Géo &amp; Culture (HGC)</option>
+                            <option value="VSF" data-fr="Vivre en France (VSF)"             data-geo="ცხოვრება საფრანგეთში (VSF)">Vivre en France (VSF)</option>
+                            <option value="OP"  data-fr="Mises en situation"                data-geo="სიტუაციური კითხვები">Mises en situation</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button id="start-btn" class="main-btn start-btn">
+                    <span data-lang="fr">Commencer →</span>
+                    <span data-lang="geo">დაწყება →</span>
+                </button>
+            </section>
+
+            <!-- AFFICHAGE QUIZ ───────────────────────────── -->
+            <section id="quiz-display" style="display:none">
+                <div class="quiz-header">
+                    <button class="quit-btn" onclick="quitQuiz()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                        <span data-lang="fr">Quitter</span>
+                        <span data-lang="geo">გასვლა</span>
+                    </button>
+                </div>
+                <div id="progress-label" class="progress-label">0 / 0</div>
+                <div id="quiz-progress-bar" class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <div id="question-container"></div>
+            </section>
+
+        </main>
+        <div id="footer-container"></div>
+    </div>
+
+    <script src="../assets/js/sidebar.js"></script>
+    <script src="../assets/js/lang.js"></script>
+    <script src="../assets/js/utils/utils.js"></script>
+    <script type="module" src="../assets/js/quiz-engine-csp.js"></script>
+</body>
+</html>
